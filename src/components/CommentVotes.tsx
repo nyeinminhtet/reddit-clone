@@ -2,40 +2,36 @@
 
 import { useCustomToast } from "@/hooks/use-custom-toast";
 import { usePrevious } from "@mantine/hooks";
-import { VoteType } from "@prisma/client";
+import { CommentVote, VoteType } from "@prisma/client";
 import React, { useEffect, useState } from "react";
-import { Button } from "../ui/Button";
+import { Button } from "@/components/ui/Button";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
-import { PostVoteRequest } from "@/lib/validators/vote";
+import { CommentVoteRequest, PostVoteRequest } from "@/lib/validators/vote";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/hooks/use-toast";
 
 interface Props {
-  postId: string;
+  commentId: string;
   initialVoteAmt: number;
-  initialVote?: VoteType | null;
+  initialVote?: Pick<CommentVote, "type">;
 }
 
-const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
+const CommentVotes = ({ commentId, initialVote, initialVoteAmt }: Props) => {
   const { loginToast } = useCustomToast();
   const [voteAmt, setVoteAmt] = useState<number>(initialVoteAmt);
   const [currentVote, setCurrentVote] = useState(initialVote);
   const preVote = usePrevious(currentVote);
 
-  useEffect(() => {
-    setCurrentVote(initialVote);
-  }, [initialVote]);
-
   const { mutate: vote } = useMutation({
     mutationFn: async (voteType: VoteType) => {
-      const payload: PostVoteRequest = {
-        postId,
+      const payload: CommentVoteRequest = {
+        commentId,
         voteType,
       };
 
-      await axios.patch("/api/subreddit/post/vote", payload);
+      await axios.patch("/api/subreddit/post/comment/vote", payload);
     },
     onError: (err, voteType) => {
       if (voteType === "UP") setVoteAmt((pre) => pre - 1);
@@ -56,12 +52,12 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
       }
     },
     onMutate: (type: VoteType) => {
-      if (currentVote === type) {
+      if (currentVote?.type === type) {
         setCurrentVote(undefined);
         if (type === "UP") setVoteAmt((pre) => pre - 1);
         else if (type === "DOWN") setVoteAmt((pre) => pre + 1);
       } else {
-        setCurrentVote(type);
+        setCurrentVote({ type });
         if (type === "UP") setVoteAmt((pre) => pre + (currentVote ? 2 : 1));
         else if (type === "DOWN")
           setVoteAmt((pre) => pre - (currentVote ? 2 : 1));
@@ -70,7 +66,7 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
   });
 
   return (
-    <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
+    <div className="flex gap-1">
       <Button
         onClick={() => vote("UP")}
         aria-label="upvote"
@@ -79,7 +75,7 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
       >
         <ArrowBigUp
           className={cn("h-4 w-4 text-zinc-700", {
-            "text-emerald-500 fill-emerald-500": currentVote === "UP",
+            "text-emerald-500 fill-emerald-500": currentVote?.type === "UP",
           })}
         />
       </Button>
@@ -96,7 +92,7 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
       >
         <ArrowBigDown
           className={cn("h-4 w-4 text-zinc-700", {
-            "text-red-500 fill-red-500": currentVote === "DOWN",
+            "text-red-500 fill-red-500": currentVote?.type === "DOWN",
           })}
         />
       </Button>
@@ -104,4 +100,4 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
   );
 };
 
-export default PostVoteClient;
+export default CommentVotes;
