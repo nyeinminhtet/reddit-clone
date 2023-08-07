@@ -2,7 +2,7 @@
 
 import { formatTimeToNow } from "@/lib/utils";
 import { Post, User, Vote } from "@prisma/client";
-import { MessagesSquare } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import React, { useRef } from "react";
 import EditorOutput from "./EditorOutput";
 import PostVoteClient from "./post-vote/PostVoteClient";
@@ -79,7 +79,7 @@ const Post = ({
           className="w-fit flex items-center gap-2"
           href={`/r/${subredditName}/post/${post.id}`}
         >
-          <MessagesSquare className="w-4 h-4" /> {commentAmt} comments
+          <MessageSquare className="w-4 h-4" /> {commentAmt} comments
         </a>
       </div>
     </div>
