@@ -1,3 +1,4 @@
+import CommentsSection from "@/components/CommentsSection";
 import EditorOutput from "@/components/EditorOutput";
 import PostVoteServer from "@/components/post-vote/PostVoteServer";
 import { buttonVariants } from "@/components/ui/Button";
@@ -6,7 +7,7 @@ import { redis } from "@/lib/redis";
 import { formatTimeToNow } from "@/lib/utils";
 import { CachePost } from "@/types/redis";
 import { Post, User, Vote } from "@prisma/client";
-import { ArrowBigUp, ArrowDownUp, Loader2 } from "lucide-react";
+import { ArrowBigDown, ArrowBigUp, Loader2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import React, { Suspense } from "react";
 
@@ -71,6 +72,15 @@ const page = async ({ params }: PageProps) => {
           </h1>
 
           <EditorOutput content={post?.content ?? cachedPost.content} />
+
+          <Suspense
+            fallback={
+              <Loader2 className="w-5 h-5 animate-spin text-zinc-500" />
+            }
+          >
+            {/* @ts-expect-error server component */}
+            <CommentsSection postId={post?.id ?? cachedPost.id} />
+          </Suspense>
         </div>
       </div>
     </div>
@@ -92,7 +102,7 @@ function PostVoteShell() {
 
       {/* downvote */}
       <div className={buttonVariants({ variant: "ghost" })}>
-        <ArrowDownUp className="h-5 w-5 text-zinc-700" />
+        <ArrowBigDown className="h-5 w-5 text-zinc-700" />
       </div>
     </div>
   );
