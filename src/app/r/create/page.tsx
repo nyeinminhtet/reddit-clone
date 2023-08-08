@@ -29,7 +29,6 @@ const Page = () => {
           return toast({
             title: "Subreddit already exist",
             description: "Please choose another subreddit name",
-            variant: "destructive",
           });
         }
 
@@ -37,7 +36,6 @@ const Page = () => {
           return toast({
             title: "Invalid Subreddit name",
             description: "Please choose a name between 3 and 20 characters",
-            variant: "destructive",
           });
         }
 
@@ -45,10 +43,9 @@ const Page = () => {
           return loginToast();
         }
       }
-      toast({
+      return toast({
         title: "There was a problem!",
         description: "Could not create Subreddit",
-        variant: "destructive",
       });
     },
     onSuccess: (data) => {
