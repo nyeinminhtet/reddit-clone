@@ -1,4 +1,4 @@
-import CommentsSection from "@/components/CommentsSection";
+import CommentsSection from "@/components/comment/CommentsSection";
 import EditorOutput from "@/components/EditorOutput";
 import PostVoteServer from "@/components/post-vote/PostVoteServer";
 import { buttonVariants } from "@/components/ui/Button";
@@ -39,26 +39,25 @@ const page = async ({ params }: PageProps) => {
     });
   }
 
-  async function getDataFetch() {
-    return await db.post.findUnique({
-      where: {
-        id: params.postId,
-      },
-      include: {
-        votes: true,
-      },
-    });
-  }
-
   if (!post && !cachedPost) return notFound();
+
   return (
     <div>
       <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
         <Suspense fallback={<PostVoteShell />}>
-          {/* @ts-expect-error server component */}
+          {/* @ts-ignore */}
           <PostVoteServer
             postId={post?.id ?? cachedPost.id}
-            getData={getDataFetch}
+            getData={async () => {
+              return await db.post.findUnique({
+                where: {
+                  id: params.postId,
+                },
+                include: {
+                  votes: true,
+                },
+              });
+            }}
           />
         </Suspense>
 

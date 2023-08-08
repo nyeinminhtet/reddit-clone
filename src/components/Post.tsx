@@ -57,7 +57,7 @@ const Post = ({
           </div>
 
           <a href={`/r/${subredditName}/post/${post.id}`}>
-            <h1 className=" text-lg font-semibold py-2 leading-6 text-gray-900">
+            <h1 className=" text-md sm:text-lg font-semibold py-2 leading-6 text-gray-900">
               {post.title}
             </h1>
           </a>

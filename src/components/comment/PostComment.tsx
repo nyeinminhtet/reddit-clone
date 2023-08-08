@@ -2,15 +2,15 @@
 
 import { Comment, CommentVote, User } from "@prisma/client";
 import React, { useRef, useState } from "react";
-import UserAvatar from "./UserAvatar";
+import UserAvatar from "../UserAvatar";
 import { formatTimeToNow } from "@/lib/utils";
 import CommentVotes from "./CommentVotes";
-import { Button } from "./ui/Button";
+import { Button } from "../ui/Button";
 import { MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Label } from "./ui/Label";
-import { Textarea } from "./ui/Textarea";
+import { Label } from "../ui/Label";
+import { Textarea } from "../ui/Textarea";
 import { useMutation } from "@tanstack/react-query";
 import { CommentRequest } from "@/lib/validators/comment";
 import axios from "axios";
@@ -112,7 +112,6 @@ const PostComment = ({ comment, votesAmt, currentVote, postId }: Props) => {
             <div className="mt-2">
               <Textarea
                 id="comment"
-                placeholder="How you think?"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 rows={1}

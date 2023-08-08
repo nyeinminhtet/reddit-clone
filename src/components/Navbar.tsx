@@ -27,7 +27,7 @@ const Navbar = async () => {
           <UserAccount user={session.user} />
         ) : (
           <Link href="/sign-in" className={buttonVariants()}>
-            Sign In
+            SignIn
           </Link>
         )}
       </div>

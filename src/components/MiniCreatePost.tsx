@@ -17,8 +17,8 @@ const MiniCreatePost = ({ session }: Props) => {
   const pathname = usePathname();
 
   return (
-    <li className=" overflow-hidden rounded-md bg-white shadow">
-      <div className=" h-full px-6 py-4 sm:flex sm:justify-between gap-6">
+    <div className="rounded-md bg-white shadow ">
+      <div className=" h-full px-6 py-4 flex sm:justify-between gap-1">
         <div className="relative">
           <UserAvatar
             user={{
@@ -34,20 +34,22 @@ const MiniCreatePost = ({ session }: Props) => {
           onClick={() => router.push(pathname + "/submit")}
           placeholder="Create post"
         />
-        <Button
-          variant="ghost"
-          onClick={() => router.push(pathname + "/submit")}
-        >
-          <ImageIcon className=" text-zinc-600" />
-        </Button>
-        <Button
-          variant="ghost"
-          onClick={() => router.push(pathname + "/submit")}
-        >
-          <Link2 className=" text-zinc-600" />
-        </Button>
+        <div className=" gap-1 hidden sm:flex">
+          <Button
+            variant="ghost"
+            onClick={() => router.push(pathname + "/submit")}
+          >
+            <ImageIcon className=" text-zinc-600 " />
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => router.push(pathname + "/submit")}
+          >
+            <Link2 className=" text-zinc-600" />
+          </Button>
+        </div>
       </div>
-    </li>
+    </div>
   );
 };
 

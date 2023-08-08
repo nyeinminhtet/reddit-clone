@@ -7,7 +7,7 @@ import PostVoteClient from "./PostVoteClient";
 interface Props {
   postId: string;
   initialVoteAmt?: number;
-  initialVote?: VoteType | null;
+  initialVote?: Vote["type"] | null;
   getData?: () => Promise<(Post & { votes: Vote[] }) | null>;
 }
 
@@ -20,7 +20,7 @@ const PostVoteServer = async ({
   const session = await getServerSession();
 
   let _votesAmt: number = 0;
-  let _currentVote: VoteType | null | undefined = undefined;
+  let _currentVote: Vote["type"] | null | undefined = undefined;
 
   if (getData) {
     const post = await getData();
@@ -33,7 +33,7 @@ const PostVoteServer = async ({
     }, 0);
 
     _currentVote = post.votes.find(
-      (vote) => vote.userId === session?.user.id
+      (vote) => vote.userId === session?.user?.id
     )?.type;
   } else {
     _votesAmt = initialVoteAmt!;

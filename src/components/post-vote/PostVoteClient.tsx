@@ -70,7 +70,7 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
   });
 
   return (
-    <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
+    <div className="flex sm:flex-col gap-1 sm:gap-3 sm:gap-0 pr-2 sm:w-20 pb-4 sm:pb-0">
       <Button
         onClick={() => vote("UP")}
         aria-label="upvote"
