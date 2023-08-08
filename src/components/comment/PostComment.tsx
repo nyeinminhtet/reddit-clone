@@ -54,7 +54,6 @@ const PostComment = ({ comment, votesAmt, currentVote, postId }: Props) => {
       return toast({
         title: "Something went wrong!",
         description: "Please try again later.",
-        variant: "destructive",
       });
     },
     onSuccess: () => {

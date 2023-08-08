@@ -41,7 +41,6 @@ const CreateComment = ({ postId, replyToId }: Props) => {
       return toast({
         title: "There was a problem.",
         description: "Something went wrong, please try again later!",
-        variant: "default",
       });
     },
     onSuccess: () => {

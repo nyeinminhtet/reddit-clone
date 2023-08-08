@@ -145,7 +145,6 @@ const Editor = ({ subredditId }: Props) => {
       return toast({
         title: "Something went wrong!",
         description: "Your post was not published, please try again later.",
-        variant: "destructive",
       });
     },
     onSuccess: (data) => {
