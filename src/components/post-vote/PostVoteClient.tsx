@@ -24,10 +24,10 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
   const [voteAmt, setVoteAmt] = useState<number>(initialVoteAmt);
   const [currentVote, setCurrentVote] = useState(initialVote);
   const preVote = usePrevious(currentVote);
+
   const pathName = usePathname();
-  console.log(pathName.includes("/post"));
-  const detailPage = "flex flex-row gap-1 sm:gap-3  pr-2 sm:w-20 pb-2 sm:pb-0";
-  const otherPage = "flex flex-col gap-1 sm:gap-3  pr-2 sm:w-20 pb-2 sm:pb-0";
+  const detailPage = " flex-row sm:flex-col";
+  const otherPage = " flex-col ";
 
   useEffect(() => {
     setCurrentVote(initialVote);
@@ -75,7 +75,11 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
   });
 
   return (
-    <div className={pathName.includes("/post") ? detailPage : otherPage}>
+    <div
+      className={`${
+        pathName.includes("/post") ? detailPage : otherPage
+      } flex gap-1 sm:gap-3  pr-2 sm:w-20 pb-2 sm:pb-0`}
+    >
       <Button
         onClick={() => vote("UP")}
         aria-label="upvote"

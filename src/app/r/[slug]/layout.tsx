@@ -56,7 +56,7 @@ const Layout = async ({
   });
 
   return (
-    <div className=" sm:container max-w-7xl mx-auto h-full  sm:pt-5">
+    <div className=" sm:container max-w-7xl mx-auto h-full pt-0  sm:pt-5">
       <div>
         {/* button that will take back */}
         <ToFeedButton />
