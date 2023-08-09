@@ -66,7 +66,7 @@ const Searchbar = () => {
           setInput(text);
           debounceRequest();
         }}
-        className=" outline-none border-none focus:border-none focus:outline-none ring-0"
+        className=" outline-none border-none focus:border-none focus:outline-none ring-0 text-[11px] sm:text-sm"
         placeholder="Search communities..."
       />
 

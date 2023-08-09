@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { PostVoteRequest } from "@/lib/validators/vote";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/hooks/use-toast";
+import { usePathname } from "next/navigation";
 
 interface Props {
   postId: string;
@@ -23,6 +24,10 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
   const [voteAmt, setVoteAmt] = useState<number>(initialVoteAmt);
   const [currentVote, setCurrentVote] = useState(initialVote);
   const preVote = usePrevious(currentVote);
+  const pathName = usePathname();
+  console.log(pathName.includes("/post"));
+  const detailPage = "flex flex-row gap-1 sm:gap-3  pr-2 sm:w-20 pb-2 sm:pb-0";
+  const otherPage = "flex flex-col gap-1 sm:gap-3  pr-2 sm:w-20 pb-2 sm:pb-0";
 
   useEffect(() => {
     setCurrentVote(initialVote);
@@ -70,7 +75,7 @@ const PostVoteClient = ({ postId, initialVote, initialVoteAmt }: Props) => {
   });
 
   return (
-    <div className="flex sm:flex-col gap-1 sm:gap-3 sm:gap-0 pr-2 sm:w-20 pb-4 sm:pb-0">
+    <div className={pathName.includes("/post") ? detailPage : otherPage}>
       <Button
         onClick={() => vote("UP")}
         aria-label="upvote"

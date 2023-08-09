@@ -31,7 +31,7 @@ const Post = ({
 
   return (
     <div className=" rounded-md bg-white shadow">
-      <div className=" px-6 py-4 flex justify-between">
+      <div className=" px-3 sm:px-6 py-4 flex justify-between">
         {/* Todo:Post votes */}
         <PostVoteClient
           initialVoteAmt={votesAmt}
@@ -44,7 +44,7 @@ const Post = ({
             {subredditName ? (
               <>
                 <a
-                  className=" underline text-zinc-900 text-sm underline-offset-2"
+                  className=" underline text-zinc-900 text-[11px] sm:text-sm underline-offset-2"
                   href={`/r/${subredditName}`}
                 >
                   r/{subredditName}
@@ -52,8 +52,13 @@ const Post = ({
                 <span className="px-1">-</span>
               </>
             ) : null}
-            <span>Posted by u/{post.author.username}</span>{" "}
-            {formatTimeToNow(new Date(post.createdAt))}
+            <span className=" text-[10px] sm:text-sm">
+              Posted by u/{post.author.username}
+            </span>{" "}
+            <span className=" text-[12px] sm:text-sm">
+              {" "}
+              {formatTimeToNow(new Date(post.createdAt))}
+            </span>
           </div>
 
           <a href={`/r/${subredditName}/post/${post.id}`}>
