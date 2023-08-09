@@ -26,7 +26,12 @@ const MiniCreatePost = ({ session }: Props) => {
               image: session?.user.image || null,
             }}
           />
-          <span className=" absolute bottom-0 right-0 rounded-full w-3 h-3 bg-green-500 outline outline-2 outline-white" />
+          <span
+            className={
+              (session?.user ? "bg-green-500" : " bg-gray-600") +
+              " absolute bottom-0 right-0 rounded-full w-3 h-3  outline outline-2 outline-white"
+            }
+          />
         </div>
 
         <Input
