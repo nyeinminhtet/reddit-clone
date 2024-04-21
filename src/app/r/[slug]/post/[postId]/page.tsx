@@ -3,10 +3,7 @@ import EditorOutput from "@/components/EditorOutput";
 import PostVoteServer from "@/components/post-vote/PostVoteServer";
 import { buttonVariants } from "@/components/ui/Button";
 import { db } from "@/lib/db";
-import { redis } from "@/lib/redis";
 import { formatTimeToNow } from "@/lib/utils";
-import { CachePost } from "@/types/redis";
-import { Post, User, Vote } from "@prisma/client";
 import { ArrowBigDown, ArrowBigUp, Loader2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import React, { Suspense } from "react";
@@ -21,12 +18,6 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 const page = async ({ params }: PageProps) => {
-  // const cachedPost = (await redis.hgetall(
-  //   `post:${params.postId}`
-  // )) as CachePost;
-
-  // let post: (Post & { votes: Vote[]; author: User }) | null = null;
-
   const post = await db.post.findFirst({
     where: {
       id: params.postId,
@@ -37,19 +28,6 @@ const page = async ({ params }: PageProps) => {
     },
   });
 
-  // if (!cachedPost) {
-  //   post = await db.post.findFirst({
-  //     where: {
-  //       id: params.postId,
-  //     },
-  //     include: {
-  //       votes: true,
-  //       author: true,
-  //     },
-  //   });
-  // }
-
-  // if (!post && !cachedPost) return notFound();
   if (!post) return notFound();
 
   return (
@@ -58,7 +36,6 @@ const page = async ({ params }: PageProps) => {
         <Suspense fallback={<PostVoteShell />}>
           {/* @ts-ignore */}
           <PostVoteServer
-            // postId={post?.id ?? cachedPost.id}
             postId={post?.id}
             getData={async () => {
               return await db.post.findUnique({
@@ -75,17 +52,13 @@ const page = async ({ params }: PageProps) => {
 
         <div className="sm:w-0 w-full flex-1 bg-white p-4 rounded-sm">
           <p className="max-h-40 mt-1 truncate text-xs text-gray-500">
-            {/* Posted by u/{post?.author.username ?? cachedPost.authorUsername}{" "} */}
             Posted by u/{post?.author.username}{" "}
-            {/* {formatTimeToNow(new Date(post?.createdAt ?? cachedPost.createdAt))} */}
             {formatTimeToNow(new Date(post?.createdAt))}
           </p>
           <h1 className="text-xl font-semibold py-2 leading-6 text-gray-900">
-            {/* {post?.title ?? cachedPost.title} */}
             {post?.title}
           </h1>
 
-          {/* <EditorOutput content={post?.content ?? cachedPost.content} /> */}
           <EditorOutput content={post?.content} />
 
           <Suspense

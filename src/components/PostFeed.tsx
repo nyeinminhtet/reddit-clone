@@ -8,6 +8,7 @@ import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Post from "./Post";
+import { Loader } from "lucide-react";
 
 interface Props {
   subredditName?: string;
@@ -87,6 +88,12 @@ const PostFeed = ({ subredditName, initialPosts }: Props) => {
           );
         }
       })}
+
+      {isFetchingNextPage && (
+        <div className="flex justify-center items-center">
+          <Loader className="w-7 h-7 animate-spin" />
+        </div>
+      )}
     </ul>
   );
 };
