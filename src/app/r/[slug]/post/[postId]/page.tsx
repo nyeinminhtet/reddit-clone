@@ -1,12 +1,14 @@
+import React, { Suspense } from "react";
+import { notFound } from "next/navigation";
+
+import { ArrowBigDown, ArrowBigUp, Loader2 } from "lucide-react";
+
 import CommentsSection from "@/components/comment/CommentsSection";
 import EditorOutput from "@/components/EditorOutput";
 import PostVoteServer from "@/components/post-vote/PostVoteServer";
 import { buttonVariants } from "@/components/ui/Button";
 import { db } from "@/lib/db";
 import { formatTimeToNow } from "@/lib/utils";
-import { ArrowBigDown, ArrowBigUp, Loader2 } from "lucide-react";
-import { notFound } from "next/navigation";
-import React, { Suspense } from "react";
 
 interface PageProps {
   params: {

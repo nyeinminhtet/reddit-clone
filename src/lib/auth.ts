@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ token, session }) {
+    async session({ session, token }) {
       if (token) {
         session.user.id = token.id;
         session.user.name = token.name;
@@ -30,7 +30,6 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.picture;
         session.user.username = token.username;
       }
-
       return session;
     },
 
@@ -56,7 +55,6 @@ export const authOptions: NextAuthOptions = {
           },
         });
       }
-
       return {
         id: dbUser.id,
         name: dbUser.name,
